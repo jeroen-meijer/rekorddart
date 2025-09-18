@@ -3,6 +3,10 @@ description: A Dart library for accessing Rekordbox databases.
 version: 1.0.0
 repository: https://github.com/jeroen-meijer/rekorddart
 license: MIT
+topics:
+  - music
+  - dj
+  - rekordbox
 
 environment:
   sdk: ^3.8.2

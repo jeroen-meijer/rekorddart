@@ -65,7 +65,8 @@ Future<void> main() async {
     }
 
     log(
-      '\n🎉 Successfully created playlist "$playlistName" with ${recentTracks.length} tracks!',
+      '\n🎉 Successfully created playlist "$playlistName" with '
+      '${recentTracks.length} tracks!',
     );
     log('📝 The playlist should now appear in your Rekordbox application.');
 
