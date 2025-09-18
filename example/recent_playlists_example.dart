@@ -13,10 +13,8 @@ Future<void> main() async {
     log('🔍 Fetching most recent 5 playlists...');
 
     final query = db.select(db.djmdPlaylist)
-      ..where(
-        (playlist) =>
-            playlist.rbLocalDeleted.equals(0) & playlist.name.isNotNull(),
-      )
+      ..excludeDeleted()
+      ..where((playlist) => playlist.name.isNotNull())
       ..orderBy([(playlist) => OrderingTerm.desc(playlist.createdAt)])
       ..limit(5);
 

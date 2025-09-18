@@ -3,5 +3,6 @@ library;
 
 export 'src/config.dart';
 export 'src/database/rekordbox_database.dart';
-export 'src/extensions.dart';
+export 'src/extensions/query_extensions.dart';
+export 'src/extensions/string_extensions.dart';
 export 'src/functions.dart';

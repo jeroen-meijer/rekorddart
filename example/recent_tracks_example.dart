@@ -14,12 +14,8 @@ Future<void> main() async {
 
     final tracks =
         await (db.select(db.djmdContent)
-              ..where(
-                (track) => track.rbLocalDeleted.equals(0),
-              )
-              ..orderBy([
-                (track) => OrderingTerm.desc(track.createdAt),
-              ])
+              ..where((track) => track.rbLocalDeleted.equals(0))
+              ..orderBy([(track) => OrderingTerm.desc(track.createdAt)])
               ..limit(10))
             .get();
 
