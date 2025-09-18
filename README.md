@@ -31,6 +31,26 @@ export SQLCIPHER_DYLIB=/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib
 export REKORDBOX_DB_KEY=<your Rekordbox sqlcipher key>
 ```
 
+#### Getting the Rekordbox Database Key
+
+You can obtain the Rekordbox database encryption key in several ways:
+
+1. **Download from online sources** (recommended):
+   ```bash
+   # Install the rekorddart executable globally
+   fvm dart pub global activate --source path .
+   
+   # Download and display the encryption key
+   download_key
+   ```
+
+2. **Use the default key**: If no `REKORDBOX_DB_KEY` environment variable is set, the library will automatically use a default key (`402fd482c38817c35ffa8ffb8c7d93143b749e7d315df7a81732a1ff43608497`).
+
+3. **Set manually**: If you already know your key, set it directly:
+   ```bash
+   export REKORDBOX_DB_KEY=your_key_here
+   ```
+
 ### 3. (Optional)Generate Drift schema from your encrypted Rekordbox DB
 
 ```
@@ -48,7 +68,12 @@ fvm dart run build_runner build --delete-conflicting-outputs
 ### 5. Use the database
 
 ```dart
-import 'package:rekorddart/database/rekordbox_database.dart';
+import 'package:rekorddart/rekorddart.dart';
+
+// The library automatically handles encryption key retrieval:
+// 1. Uses REKORDBOX_DB_KEY environment variable if set
+// 2. Falls back to default key if environment variable is not set
+final key = getRekordboxEncryptionKey();
 
 final db = RekordboxDatabase();
 // Use generated DAOs/entities, e.g.

@@ -1,10 +1,24 @@
 import 'dart:io';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart';
 
 /// Database file names for different Rekordbox versions
 const String _dbFileV5 = 'datafile.edb';
 const String _dbFileV6 = 'master.db';
+
+/// Default Rekordbox database encryption key
+@protected
+const String defaultRekordboxKey =
+    '402fd482c38817c35ffa8ffb8c7d93143b749e7d315df7a81732a1ff43608497';
+
+/// Gets the Rekordbox database encryption key
+///
+/// Returns the value of the REKORDBOX_DB_KEY environment variable if set,
+/// otherwise returns the default key.
+String getRekordboxEncryptionKey() {
+  return Platform.environment['REKORDBOX_DB_KEY'] ?? defaultRekordboxKey;
+}
 
 /// {@template rekordbox_config}
 /// Configuration structure for Rekordbox database access
