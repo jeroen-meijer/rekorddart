@@ -107,7 +107,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
         imagePath: Value(imagePath),
         attribute: Value(attribute),
         parentID: Value(effectiveParentId),
-        smartList: Value(smartListXml),
+        smartList: smartListXml.toValue(),
         uuid: Value(effectiveUuid),
         rbDataStatus: const Value(0),
         rbLocalDataStatus: const Value(0),
@@ -248,7 +248,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
       playlistId: playlistId,
       entries: [
         DjmdSongPlaylistCompanion(
-          id: id == null ? const Value.absent() : Value(id),
+          id: id.toValue(),
           contentID: Value(contentId),
         ),
       ],
