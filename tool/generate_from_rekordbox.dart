@@ -42,12 +42,11 @@ Future<void> main(List<String> args) async {
 
     final result = db.select(
       """
-      SELECT type, name, sql
-      FROM sqlite_master
-      WHERE type IN ('table','index','view')
-        AND sql IS NOT NULL
-      ORDER BY CASE type WHEN 'table' THEN 0 WHEN 'view' THEN 1 ELSE 2 END, name;
-      """,
+SELECT type, name, sql
+FROM sqlite_master
+WHERE type IN ('table','index','view')
+  AND sql IS NOT NULL
+ORDER BY CASE type WHEN 'table' THEN 0 WHEN 'view' THEN 1 ELSE 2 END, name;""",
     );
 
     final buffer = StringBuffer()
