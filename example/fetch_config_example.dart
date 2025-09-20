@@ -1,6 +1,6 @@
 import 'package:cli_table/cli_table.dart';
 import 'package:rekorddart/logger.dart';
-import 'package:rekorddart/rekorddart.dart';
+import 'package:rekorddart/rekorddart.dart' hide Table;
 
 /// Example demonstrating how to fetch Rekordbox configuration
 /// for different versions of Rekordbox.

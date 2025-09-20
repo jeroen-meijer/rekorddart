@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:rekorddart/logger.dart';
 import 'package:rekorddart/rekorddart.dart';
 
@@ -29,7 +28,7 @@ Future<void> main() async {
     log('🔍 Fetching 5 most recent tracks...');
     final recentTracks =
         await (db.select(db.djmdContent)
-              ..where((track) => track.rbLocalDeleted.equals(0))
+              ..excludeDeleted()
               ..orderBy([(track) => OrderingTerm.desc(track.createdAt)])
               ..limit(5))
             .get();

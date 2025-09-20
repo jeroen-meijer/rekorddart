@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:rekorddart/logger.dart';
 import 'package:rekorddart/rekorddart.dart';
 
@@ -12,36 +11,35 @@ Future<void> main() async {
 
     log('🔍 Fetching most recent 10 tracks...');
 
-    final tracks =
-        await (db.select(db.djmdContent)
-              ..where((track) => track.rbLocalDeleted.equals(0))
-              ..orderBy([(track) => OrderingTerm.desc(track.createdAt)])
-              ..limit(10))
-            .get();
+    final base = (db.select(db.djmdContent)
+      ..excludeDeleted()
+      ..orderBy([(track) => OrderingTerm.desc(track.createdAt)])
+      ..limit(10));
+    final rows = await base.join([
+      leftOuterJoin(
+        db.djmdArtist,
+        db.djmdArtist.id.equalsExp(db.djmdContent.artistID),
+      ),
+    ]).get();
 
-    if (tracks.isEmpty) {
+    if (rows.isEmpty) {
       log('📭 No tracks found in the database.');
       return;
     }
 
-    log('🎵 Found ${tracks.length} tracks:\n');
+    log('🎵 Found ${rows.length} tracks:\n');
 
-    for (final track in tracks) {
+    for (final row in rows) {
+      final track = row.readTable(db.djmdContent);
+      final artist = row.readTableOrNull(db.djmdArtist);
       final title = track.title ?? 'Unknown Title';
-      final bpm = track.bpm?.toString() ?? 'Unknown BPM';
+      final bpm = track.realBpm;
       final addedDate = track.createdAt;
-
-      var artistName = 'Unknown Artist';
-      if (track.artistID != null) {
-        final artist =
-            await (db.select(db.djmdArtist)
-                  ..where((artist) => artist.id.equals(track.artistID!)))
-                .getSingleOrNull();
-        artistName = artist?.name ?? 'Unknown Artist';
-      }
+      final artistName =
+          artist?.name ?? track.srcArtistName ?? 'Unknown Artist';
 
       log('🎧 "$title" by $artistName');
-      log('   BPM: ${bpm.tryParseBpm()} | Added: $addedDate');
+      log('   BPM: ${bpm ?? 'Unknown BPM'} | Added: $addedDate');
       log('');
     }
   } catch (e) {

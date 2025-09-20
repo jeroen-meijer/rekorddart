@@ -2,7 +2,6 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:rekorddart/rekorddart.dart';
 import 'package:sqlite3/open.dart' as sqlite_open;

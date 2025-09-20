@@ -1,10 +1,27 @@
 words:
+  - camelot
+  - deepmerge
   - djmd
+  - Djmd
   - dylib
+  - fuzzywuzzy
+  - getch
+  - getche
+  - humanfriendly
+  - itunes
+  - KEYSORT
   - libsqlcipher
   - meijer
+  - pyrekordbox
   - rekordbox
   - rekorddart
+  - rkdb
+  - spotify
   - sqlcipher
   - Sqlcipher
   - sqlite
+  - timespan
+  - unignored
+  - venv
+  - waveyliq
+  - yaspin
