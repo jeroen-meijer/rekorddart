@@ -66,18 +66,71 @@ class RekordboxDatabase extends _$RekordboxDatabase {
   /// parent ID.
   static const rootPlaylistId = 'root';
 
+  /// Deletes a playlist by its ID.
+  Future<DjmdPlaylistData> deletePlaylist(String id) async {
+    return transaction(
+      () => (delete(djmdPlaylist)..where((p) => p.id.equals(id)))
+          .goAndReturn()
+          .then((value) => value.single),
+    );
+  }
+
   /// Creates a new playlist with reasonable defaults and returns the created
   /// row.
   ///
-  /// - Generates a unique string ID if [id] is null/empty
-  /// - Generates a UUID v4 if [uuid] is null/empty
   /// - Defaults [parentId] to 'root' when null/empty
   /// - When [seq] is not provided, it appends the playlist at the end
   Future<DjmdPlaylistData> createPlaylist({
     required String name,
     String? parentId,
     int? seq,
-    int attribute = 0,
+    String? imagePath,
+    String? smartListXml,
+  }) async {
+    return _createPlaylistEntity(
+      name: name,
+      attribute: 0,
+      parentId: parentId,
+      seq: seq,
+      imagePath: imagePath,
+      smartListXml: smartListXml,
+    );
+  }
+
+  /// Creates a new playlist folder with reasonable defaults and returns the
+  /// created row.
+  ///
+  /// - Defaults [parentId] to 'root' when null/empty
+  /// - When [seq] is not provided, it appends the folder at the end
+  Future<DjmdPlaylistData> createPlaylistFolder({
+    required String name,
+    String? parentId,
+    int? seq,
+    String? imagePath,
+    String? smartListXml,
+  }) async {
+    return _createPlaylistEntity(
+      name: name,
+      attribute: 1,
+      parentId: parentId,
+      seq: seq,
+      imagePath: imagePath,
+      smartListXml: smartListXml,
+    );
+  }
+
+  /// Creates a new playlist entity with reasonable defaults and returns the
+  /// created row.
+  ///
+  /// - Generates a unique string ID if [id] is null/empty
+  /// - Generates a UUID v4 if [uuid] is null/empty
+  /// - Defaults [parentId] to 'root' when null/empty
+  /// - When [seq] is not provided, it appends the playlist at the end
+  Future<DjmdPlaylistData> _createPlaylistEntity({
+    required String name,
+    required int attribute,
+    String? parentId,
+    int? seq,
     String? imagePath,
     String? smartListXml,
     String? id,
@@ -100,20 +153,18 @@ class RekordboxDatabase extends _$RekordboxDatabase {
 
     return into(djmdPlaylist).insertReturning(
       DjmdPlaylistCompanion.insert(
-        id: Value(effectiveId),
-        seq: Value(effectiveSeq),
-        name: Value(name),
-        imagePath: Value(imagePath),
-        attribute: Value(attribute),
-        parentID: Value(effectiveParentId),
+        id: effectiveId.toValue(),
+        seq: effectiveSeq.toValue(),
+        name: name.toValue(),
+        imagePath: imagePath.toValue(),
+        attribute: attribute.toValue(),
+        parentID: effectiveParentId.toValue(),
         smartList: smartListXml.toValue(),
-        uuid: Value(effectiveUuid),
+        uuid: effectiveUuid.toValue(),
         rbDataStatus: const Value(0),
         rbLocalDataStatus: const Value(0),
         rbLocalDeleted: const Value(0),
         rbLocalSynced: const Value(0),
-        usn: const Value(null),
-        rbLocalUsn: const Value(null),
         createdAt: nowIso,
         updatedAt: nowIso,
       ),
@@ -150,6 +201,40 @@ class RekordboxDatabase extends _$RekordboxDatabase {
               ..where(djmdPlaylist.parentID.equals(parentId ?? rootPlaylistId)))
             .getSingle();
     return row.read(c) ?? 0;
+  }
+
+  /// Updates a playlist by its ID.
+  ///
+  /// Any values that are `null` will not be updated.
+  Future<void> updatePlaylist(
+    String playlistId, {
+    int? seq,
+    String? name,
+    String? imagePath,
+    String? smartList,
+    String? uuid,
+    int? rbDataStatus,
+    int? rbLocalDataStatus,
+    int? rbLocalDeleted,
+    int? rbLocalSynced,
+    int? usn,
+    int? rbLocalUsn,
+  }) async {
+    await (update(djmdPlaylist)..where((p) => p.id.equals(playlistId))).write(
+      DjmdPlaylistCompanion(
+        seq: seq.toValue(),
+        name: name.toValue(),
+        imagePath: imagePath.toValue(),
+        smartList: smartList.toValue(),
+        uuid: uuid.toValue(),
+        rbDataStatus: rbDataStatus.toValue(),
+        rbLocalDataStatus: rbLocalDataStatus.toValue(),
+        rbLocalDeleted: rbLocalDeleted.toValue(),
+        rbLocalSynced: rbLocalSynced.toValue(),
+        usn: usn.toValue(),
+        rbLocalUsn: rbLocalUsn.toValue(),
+      ),
+    );
   }
 
   /// Counts non-deleted songs in a playlist efficiently.
@@ -253,6 +338,29 @@ class RekordboxDatabase extends _$RekordboxDatabase {
       ],
     );
     return inserted.first;
+  }
+
+  /// Gets a song by its ID.
+  Future<DjmdContentData?> getSongById(String id) async {
+    return (select(
+      djmdContent,
+    )..where((s) => s.id.equals(id))).getSingleOrNull();
+  }
+
+  /// Updates a song by its ID.
+  ///
+  /// Any values that are `null` will not be updated.
+  Future<DjmdContentData> updateSong(
+    String id, {
+    String? keyId,
+  }) async {
+    return (update(djmdContent)..where((s) => s.id.equals(id)))
+        .writeReturning(
+          DjmdContentCompanion(
+            keyID: keyId.toValue(),
+          ),
+        )
+        .then((value) => value.single);
   }
 }
 
