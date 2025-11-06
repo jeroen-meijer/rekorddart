@@ -1,6 +1,6 @@
 name: rekorddart
 description: A Dart library for accessing Rekordbox databases.
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/jeroen-meijer/rekorddart
 license: MIT
 topics:
