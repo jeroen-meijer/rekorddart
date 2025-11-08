@@ -407,23 +407,50 @@ void _configureSqlcipherDynamicLibrary() {
     return;
   }
 
+  // Check common locations based on platform
+  final candidates = <String>[];
+
   if (Platform.isMacOS) {
-    final candidates = <String>[
+    candidates.addAll([
       // Apple Silicon (Homebrew default)
       '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib',
       '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.dylib',
       // Intel (Homebrew default)
       '/usr/local/opt/sqlcipher/lib/libsqlcipher.0.dylib',
       '/usr/local/opt/sqlcipher/lib/libsqlcipher.dylib',
-    ];
+    ]);
+  } else if (Platform.isLinux) {
+    candidates.addAll([
+      // Debian/Ubuntu default
+      '/usr/lib/x86_64-linux-gnu/libsqlcipher.so.0',
+      '/usr/lib/x86_64-linux-gnu/libsqlcipher.so',
+      // Generic Linux locations
+      '/usr/lib/libsqlcipher.so.0',
+      '/usr/lib/libsqlcipher.so',
+      '/usr/local/lib/libsqlcipher.so.0',
+      '/usr/local/lib/libsqlcipher.so',
+    ]);
+  } else if (Platform.isWindows) {
+    candidates.addAll([
+      r'C:\Program Files\SQLCipher\sqlcipher.dll',
+      r'C:\Program Files (x86)\SQLCipher\sqlcipher.dll',
+      r'C:\sqlcipher\sqlcipher.dll',
+    ]);
+  }
 
-    for (final path in candidates) {
-      if (File(path).existsSync()) {
-        sqlite_open.open.overrideForAll(() => DynamicLibrary.open(path));
-        return;
-      }
+  for (final path in candidates) {
+    if (File(path).existsSync()) {
+      sqlite_open.open.overrideForAll(() => DynamicLibrary.open(path));
+      return;
     }
   }
+
+  // If we reach here, no library was found
+  throw StateError(
+    'SQLCipher library not found. Please install SQLCipher or set the '
+    '$_envSqlcipherDylib environment variable to the library path.\n'
+    'Searched locations:\n${candidates.map((p) => '  - $p').join('\n')}',
+  );
 }
 
 String? _getConfigValue(String name) {
