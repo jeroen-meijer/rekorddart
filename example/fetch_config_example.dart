@@ -13,10 +13,7 @@ Future<void> main() async {
   log('Checking if Rekordbox is running...');
   final isRunning = await checkIsRekordboxRunning();
 
-  final table = Table(
-    header: ['Field', 'Value'],
-    columnWidths: [24, 80],
-  );
+  final table = Table(header: ['Field', 'Value'], columnWidths: [24, 80]);
 
   // ignore: avoid_positional_boolean_parameters
   String yesNo(bool value) => value ? '✅ Yes' : '❌ No';

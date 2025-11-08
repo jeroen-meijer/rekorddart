@@ -49,13 +49,20 @@ dart pub get
 
 ### 2. Set environment variables
 
-Set the SQLCipher library and Rekordbox DB key via environment variables:
+The library will automatically detect SQLCipher in common installation locations. If you have a custom installation, you can override the path:
 
 ```sh
-export SQLCIPHER_DYLIB=/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib
-# Optional
+# Optional: only needed for custom SQLCipher installations
+export SQLCIPHER_DYLIB=/path/to/your/libsqlcipher.dylib
+
+# Optional: Rekordbox DB key (if not using default)
 export REKORDBOX_DB_KEY=<your Rekordbox sqlcipher key>
 ```
+
+**Common SQLCipher locations checked automatically:**
+- **macOS**: Homebrew installations in `/opt/homebrew` and `/usr/local`
+- **Linux**: System libraries in `/usr/lib` and `/usr/local/lib`
+- **Windows**: Common installation directories in `C:\Program Files`
 
 #### Getting the Rekordbox Database Key
 

@@ -55,10 +55,7 @@ Future<void> main() async {
     for (var i = 0; i < recentTracks.length; i++) {
       final track = recentTracks[i];
 
-      await db.addSongToPlaylist(
-        playlistId: playlistId,
-        contentId: track.id!,
-      );
+      await db.addSongToPlaylist(playlistId: playlistId, contentId: track.id!);
 
       log('   ✓ Added track ${i + 1}: ${track.title ?? 'Unknown Title'}');
     }

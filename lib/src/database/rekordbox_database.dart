@@ -1,15 +1,12 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/native.dart';
 import 'package:rekorddart/rekorddart.dart';
-import 'package:sqlite3/open.dart' as sqlite_open;
 import 'package:uuid/uuid.dart';
 
 part 'rekordbox_database.g.dart';
 
-const String _envSqlcipherDylib = 'SQLCIPHER_DYLIB';
 const String _envRekordboxDbKey = 'REKORDBOX_DB_KEY';
 
 /// {@template rekordbox_database}
@@ -350,16 +347,9 @@ class RekordboxDatabase extends _$RekordboxDatabase {
   /// Updates a song by its ID.
   ///
   /// Any values that are `null` will not be updated.
-  Future<DjmdContentData> updateSong(
-    String id, {
-    String? keyId,
-  }) async {
+  Future<DjmdContentData> updateSong(String id, {String? keyId}) async {
     return (update(djmdContent)..where((s) => s.id.equals(id)))
-        .writeReturning(
-          DjmdContentCompanion(
-            keyID: keyId.toValue(),
-          ),
-        )
+        .writeReturning(DjmdContentCompanion(keyID: keyId.toValue()))
         .then((value) => value.single);
   }
 }
@@ -372,7 +362,7 @@ LazyDatabase _openConnection() {
       throw StateError('Rekordbox installation not found on this system.');
     }
 
-    _configureSqlcipherDynamicLibrary();
+    configureSqlcipherDynamicLibrary(getConfigValue: _getConfigValue);
 
     final dbFile = File(config.dbPath);
     if (!dbFile.existsSync()) {
@@ -398,32 +388,6 @@ LazyDatabase _openConnection() {
 
     return database;
   });
-}
-
-void _configureSqlcipherDynamicLibrary() {
-  final overridePath = _getConfigValue(_envSqlcipherDylib);
-  if (overridePath != null && overridePath.isNotEmpty) {
-    sqlite_open.open.overrideForAll(() => DynamicLibrary.open(overridePath));
-    return;
-  }
-
-  if (Platform.isMacOS) {
-    final candidates = <String>[
-      // Apple Silicon (Homebrew default)
-      '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib',
-      '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.dylib',
-      // Intel (Homebrew default)
-      '/usr/local/opt/sqlcipher/lib/libsqlcipher.0.dylib',
-      '/usr/local/opt/sqlcipher/lib/libsqlcipher.dylib',
-    ];
-
-    for (final path in candidates) {
-      if (File(path).existsSync()) {
-        sqlite_open.open.overrideForAll(() => DynamicLibrary.open(path));
-        return;
-      }
-    }
-  }
 }
 
 String? _getConfigValue(String name) {
