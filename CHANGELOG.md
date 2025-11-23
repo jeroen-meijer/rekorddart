@@ -1,3 +1,7 @@
+## 1.1.0
+
+- feat: auto-scan for SQL Cipher library in common installation locations.
+
 ## 1.0.2
 
 - feat: add `createPlaylistFolder` and `deletePlaylist` methods to `RekordboxDatabase`.
