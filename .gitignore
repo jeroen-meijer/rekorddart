@@ -11,3 +11,7 @@ pubspec.lock
 
 # Drift schema
 lib/database/rekordbox_schema.drift
+
+# MacOS
+.DS_Store
+Thumbs.db
