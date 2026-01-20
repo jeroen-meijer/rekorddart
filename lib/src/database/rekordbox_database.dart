@@ -7,8 +7,6 @@ import 'package:uuid/uuid.dart';
 
 part 'rekordbox_database.g.dart';
 
-const String _envRekordboxDbKey = 'REKORDBOX_DB_KEY';
-
 /// {@template rekordbox_database}
 /// An instance of a Rekordbox database, powered by Drift.
 ///
@@ -372,12 +370,7 @@ LazyDatabase _openConnection() {
     final database = NativeDatabase(
       dbFile,
       setup: (rawDb) {
-        final key = _getConfigValue(_envRekordboxDbKey);
-        if (key == null || key.isEmpty) {
-          throw StateError(
-            'Missing SQLCipher key: set $_envRekordboxDbKey in the environment',
-          );
-        }
+        final key = getRekordboxEncryptionKey();
         rawDb
           ..execute("PRAGMA key = '$key';")
           ..execute('PRAGMA cipher_page_size = 4096;')

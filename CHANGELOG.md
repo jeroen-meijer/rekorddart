@@ -1,3 +1,7 @@
+## 1.1.1
+
+- fix: use default encryption key when REKORDBOX_DB_KEY environment variable is not set
+
 ## 1.1.0
 
 - feat: auto-scan for SQL Cipher library in common installation locations.
