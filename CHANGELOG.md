@@ -1,6 +1,6 @@
 ## Upcoming
 
-- chore: add database and extensions barrel files; rekorddart.dart exports via these barrels
+- chore: add database and extensions barrels; export them from rekorddart.dart
 
 ## 1.1.1
 

@@ -71,4 +71,5 @@ dart test
 - **Unshipped work:** edit or merge existing Upcoming bullets. Do not add `fix(X)` under a `feat(X)` that never left Upcoming.
 - **After a release:** only then does a later bug fix get its own Upcoming line.
 - Prefer fewer, broader bullets. Skip internal-only churn unless consumers notice it.
+- Run `/humanize` (or match that skill) on every new or edited Upcoming bullet before you commit. Keep conventional prefixes; the rest should read like a short product note, not a session diary.
 - Keep the `## Upcoming` heading forever. On release, move its bullets into `## {version}` (or `## {version} - {YYYY-MM-DD}`) under it.
