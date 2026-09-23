@@ -1,3 +1,7 @@
+## Upcoming
+
+- chore: add database and extensions barrel files; rekorddart.dart exports via these barrels
+
 ## 1.1.1
 
 - fix: use default encryption key when REKORDBOX_DB_KEY environment variable is not set
