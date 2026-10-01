@@ -65,7 +65,7 @@ dart test
 
 ## Changelog
 
-`CHANGELOG.md` → `## Upcoming` is the **user-facing draft for the next release**, not a commit diary.
+`CHANGELOG.md` → `## Upcoming` is the draft for the next release.
 
 - Write for someone who gets the next package version. Conventional prefixes are fine.
 - Lead with what the user can do or notice, not how it was built.
@@ -73,9 +73,10 @@ dart test
 - One distinct surface or capability per bullet when they are separate. Do not semicolon-stack unrelated polish onto one feat.
 - Fix lines name the symptom the user sees, not the patch mechanism.
 - Prefer what the UI does now over soft wrappers ("keep usable", "improve X") and parenthetical patch dumps ("stop stealing focus", "wire the callback"). Say what happens when the user acts ("… close when you click the chip again").
+- Every PR updates `## Upcoming` (CI enforces this when the check is present). Prefer end-user wording when the change is product-visible. CI, tooling, refactors, and agent-doc changes still get a short honest bullet (`docs` / `chore` / `ci` / …); do not invent fake product language for them.
 - Simplify for end users: short, concrete, scannable.
 - **Unshipped work:** edit or merge existing Upcoming bullets. Do not add `fix(X)` under a `feat(X)` that never left Upcoming.
 - **After a release:** only then does a later bug fix get its own Upcoming line.
-- Prefer fewer, broader bullets. Skip internal-only churn unless consumers notice it.
+- Prefer fewer, broader bullets over one line per agent session.
 - Run `/humanize` (or match that skill) on every new or edited Upcoming bullet before you commit. Keep conventional prefixes; the rest should read like a short product note, not a session diary.
 - Keep the `## Upcoming` heading forever. On release, move its bullets into `## {version}` (or `## {version} - {YYYY-MM-DD}`) under it.

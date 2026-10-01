@@ -1,5 +1,7 @@
 ## Upcoming
 
+- docs: require every PR to update Upcoming; prefer end-user wording when the change is visible, and write what the UI does instead of soft wrappers
+
 - chore: add database and extensions barrels; export them from rekorddart.dart
 
 ## 1.1.1
