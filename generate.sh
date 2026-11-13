@@ -14,38 +14,17 @@ if [ -z "$REKORDBOX_DB_KEY" ]; then
     exit 1
 fi
 
-# Optional: Check for SQLCipher library (macOS Homebrew paths)
-if [ "$(uname)" = "Darwin" ] && [ -z "$SQLCIPHER_DYLIB" ]; then
-    for lib_path in \
-        "/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib" \
-        "/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.dylib" \
-        "/usr/local/opt/sqlcipher/lib/libsqlcipher.0.dylib" \
-        "/usr/local/opt/sqlcipher/lib/libsqlcipher.dylib"; do
-        if [ -f "$lib_path" ]; then
-            export SQLCIPHER_DYLIB="$lib_path"
-            echo "📚 Found SQLCipher library: $lib_path"
-            break
-        fi
-    done
-
-    if [ -z "$SQLCIPHER_DYLIB" ]; then
-        echo "⚠️  Warning: SQLCipher library not found in standard Homebrew locations"
-        echo "   You may need to install it with: brew install sqlcipher"
-        echo "   Or set SQLCIPHER_DYLIB manually"
-    fi
-fi
-
 echo ""
 echo "🔧 Installing dependencies..."
-fvm dart pub get
+dart pub get
 
 echo ""
 echo "🗃️  Generating Drift schema from Rekordbox database..."
-fvm dart run tool/generate_from_rekordbox.dart
+dart run tool/generate_from_rekordbox.dart
 
 echo ""
 echo "⚙️  Running Drift code generation..."
-fvm dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 
 echo ""
 echo "✅ Done! Your Rekordbox database entities are ready to use."

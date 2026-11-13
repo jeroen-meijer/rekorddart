@@ -1,83 +1,32 @@
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:sqlite3/open.dart' as sqlite_open;
+import 'package:sqlite3/common.dart';
 
-/// Configures the SQLCipher dynamic library for use with sqlite3.
+/// Throws a [StateError] when [database] runs on plain SQLite instead of
+/// SQLCipher, which cannot open a Rekordbox database.
 ///
-/// This function attempts to locate the SQLCipher library in the
-/// following order:
-/// 1. Environment variable override: `SQLCIPHER_DYLIB`
-/// 2. Platform-specific common installation paths
-/// 3. Throws [StateError] if library not found
+/// `package:sqlite3` picks its native library when the app is built. Apps that
+/// use rekorddart select SQLCipher in their own `pubspec.yaml`:
 ///
-/// The environment variable takes precedence for custom installations.
-void configureSqlcipherDynamicLibrary({
-  String? Function(String)? getConfigValue,
-}) {
-  const envSqlcipherDylib = 'SQLCIPHER_DYLIB';
+/// ```yaml
+/// hooks:
+///   user_defines:
+///     sqlite3:
+///       source: sqlcipher
+/// ```
+void ensureSqlcipher(CommonDatabase database) {
+  if (database.select('PRAGMA cipher_version').isNotEmpty) return;
 
-  // Use provided config getter or default to environment variables
-  final configGetter = getConfigValue ?? _getDefaultConfigValue;
-
-  final overridePath = configGetter(envSqlcipherDylib);
-  if (overridePath != null && overridePath.isNotEmpty) {
-    sqlite_open.open.overrideForAll(() => DynamicLibrary.open(overridePath));
-    return;
-  }
-
-  // Check common locations based on platform
-  final candidates = <String>[];
-
-  if (Platform.isMacOS) {
-    candidates.addAll([
-      // Apple Silicon (Homebrew default)
-      '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.0.dylib',
-      '/opt/homebrew/opt/sqlcipher/lib/libsqlcipher.dylib',
-      // Intel (Homebrew default)
-      '/usr/local/opt/sqlcipher/lib/libsqlcipher.0.dylib',
-      '/usr/local/opt/sqlcipher/lib/libsqlcipher.dylib',
-    ]);
-  } else if (Platform.isLinux) {
-    candidates.addAll([
-      // Debian/Ubuntu default
-      '/usr/lib/x86_64-linux-gnu/libsqlcipher.so.0',
-      '/usr/lib/x86_64-linux-gnu/libsqlcipher.so',
-      // Generic Linux locations
-      '/usr/lib/libsqlcipher.so.0',
-      '/usr/lib/libsqlcipher.so',
-      '/usr/local/lib/libsqlcipher.so.0',
-      '/usr/local/lib/libsqlcipher.so',
-    ]);
-  } else if (Platform.isWindows) {
-    candidates.addAll([
-      r'C:\Program Files\SQLCipher\sqlcipher.dll',
-      r'C:\Program Files (x86)\SQLCipher\sqlcipher.dll',
-      r'C:\sqlcipher\sqlcipher.dll',
-    ]);
-  }
-
-  for (final path in candidates) {
-    if (File(path).existsSync()) {
-      sqlite_open.open.overrideForAll(() => DynamicLibrary.open(path));
-      return;
-    }
-  }
-
-  // If we reach here, no library was found
   throw StateError(
-    'SQLCipher library not found. Please install SQLCipher or set the '
-    '$envSqlcipherDylib environment variable to the library path.\n'
-    'Searched locations:\n${candidates.map((p) => '  - $p').join('\n')}',
+    'SQLite was loaded without SQLCipher, so the Rekordbox database cannot be '
+    "opened. Add this to your app's pubspec.yaml and run it with `dart run`, "
+    '`dart test`, `dart build cli` or `dart install`:\n'
+    '\n'
+    'hooks:\n'
+    '  user_defines:\n'
+    '    sqlite3:\n'
+    '      source: sqlcipher\n',
   );
-}
-
-String? _getDefaultConfigValue(String name) {
-  if (Platform.environment[name] case final envValue?
-      when envValue.isNotEmpty) {
-    return envValue;
-  }
-  return null;
 }
 
 /// Checks if a process named `rekordbox` is running on the current system.

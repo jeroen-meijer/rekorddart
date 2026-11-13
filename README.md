@@ -19,20 +19,30 @@ A Dart library for accessing Rekordbox databases.
 
 ## Getting started
 
-Make sure you have the following installed:
-
 ### Prerequisites
 
-- **Dart 3.8.2+**: [Download Dart SDK](https://dart.dev/get-dart) - Choose your platform and follow the installation instructions
+- **Dart 3.10+**: [Download Dart SDK](https://dart.dev/get-dart) - Choose your platform and follow the installation instructions
 - **Rekordbox 6.0.0+**: [Download Rekordbox](https://rekordbox.com/en/download/) - Official DJ software from AlphaTheta/Pioneer DJ
-- **SQLCipher 4.0.0+**: [Download SQLCipher](https://www.zetetic.net/sqlcipher/open-source/) - Encrypted SQLite database library
-  - **macOS (Homebrew)**: `brew install sqlcipher`
-  - **Windows**: [Pre-compiled binaries](https://www.zetetic.net/sqlcipher/downloads/)
-  - **Linux**: Install via your package manager (e.g., `apt install sqlcipher` on Ubuntu)
+
+You don't need to install SQLCipher. `package:sqlite3` downloads a prebuilt SQLCipher library when your app builds.
 
 ## Usage
 
-Add the library to your `pubspec.yaml`, instantiate the `RekordboxDatabase` class and start querying your database.
+Add rekorddart to your app's `pubspec.yaml`, and tell `package:sqlite3` to use SQLCipher:
+
+```yaml
+dependencies:
+  rekorddart: ^2.0.0
+
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlcipher
+```
+
+The `hooks` section only works in your app's own `pubspec.yaml`, not in a dependency's. Without it, `RekordboxDatabase.connect()` throws an error that shows these lines.
+
+Then instantiate the `RekordboxDatabase` class and start querying your database:
 
 ```dart
 import 'package:rekorddart/rekorddart.dart';
@@ -41,28 +51,20 @@ final db = await RekordboxDatabase.connect();
 final tracks = await db.select(db.djmdContent).get();
 ```
 
+Run your app with `dart run`, `dart test`, `dart build cli` or `dart install`. `dart compile exe` and `dart pub global activate` skip build hooks, so they cannot load SQLCipher.
+
 ### 1. Install dependencies
 
 ```sh
 dart pub get
 ```
 
-### 2. Set environment variables
-
-The library will automatically detect SQLCipher in common installation locations. If you have a custom installation, you can override the path:
+### 2. Set the Rekordbox database key (optional)
 
 ```sh
-# Optional: only needed for custom SQLCipher installations
-export SQLCIPHER_DYLIB=/path/to/your/libsqlcipher.dylib
-
-# Optional: Rekordbox DB key (if not using default)
+# Only needed if your key differs from the default
 export REKORDBOX_DB_KEY=<your Rekordbox sqlcipher key>
 ```
-
-**Common SQLCipher locations checked automatically:**
-- **macOS**: Homebrew installations in `/opt/homebrew` and `/usr/local`
-- **Linux**: System libraries in `/usr/lib` and `/usr/local/lib`
-- **Windows**: Common installation directories in `C:\Program Files`
 
 #### Getting the Rekordbox Database Key
 

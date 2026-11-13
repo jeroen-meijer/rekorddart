@@ -39,13 +39,11 @@ class RekordboxDatabase extends _$RekordboxDatabase {
           'connecting to the database.',
         );
       } else {
-        stderr.writeln(
-          '''
+        stderr.writeln('''
 ⚠️ Rekordbox is being accessed while it is running.
 ⚠️ Doing any write operation to the database is extremely dangerous.
 ⚠️ Proceed with caution.
-          ''',
-        );
+          ''');
       }
     }
     return RekordboxDatabase._();
@@ -73,7 +71,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
 
   /// Deletes a playlist by its ID.
   Future<DjmdPlaylistData> deletePlaylist(String id) async {
-    return transaction(
+    return await transaction(
       () => (delete(djmdPlaylist)..where((p) => p.id.equals(id)))
           .goAndReturn()
           .then((value) => value.single),
@@ -92,7 +90,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
     String? imagePath,
     String? smartListXml,
   }) async {
-    return _createPlaylistEntity(
+    return await _createPlaylistEntity(
       name: name,
       attribute: 0,
       parentId: parentId,
@@ -114,7 +112,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
     String? imagePath,
     String? smartListXml,
   }) async {
-    return _createPlaylistEntity(
+    return await _createPlaylistEntity(
       name: name,
       attribute: 1,
       parentId: parentId,
@@ -156,7 +154,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
 
     final nowIso = DateTime.now().toIso8601String();
 
-    return into(djmdPlaylist).insertReturning(
+    return await into(djmdPlaylist).insertReturning(
       DjmdPlaylistCompanion.insert(
         id: effectiveId.toValue(),
         seq: effectiveSeq.toValue(),
@@ -205,7 +203,8 @@ class RekordboxDatabase extends _$RekordboxDatabase {
               ..addColumns([c])
               ..where(djmdPlaylist.parentID.equals(parentId ?? rootPlaylistId)))
             .getSingle();
-    return row.read(c) ?? 0;
+    final count = row.read(c);
+    return count ?? 0;
   }
 
   /// Updates a playlist by its ID.
@@ -253,7 +252,8 @@ class RekordboxDatabase extends _$RekordboxDatabase {
                     djmdSongPlaylist.rbLocalDeleted.equals(0),
               ))
             .getSingle();
-    return row.read(c) ?? 0;
+    final count = row.read(c);
+    return count ?? 0;
   }
 
   /// Adds multiple songs to a playlist, normalizing missing fields to valid
@@ -347,7 +347,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
 
   /// Gets a song by its ID.
   Future<DjmdContentData?> getSongById(String id) async {
-    return (select(
+    return await (select(
       djmdContent,
     )..where((s) => s.id.equals(id))).getSingleOrNull();
   }
@@ -356,7 +356,7 @@ class RekordboxDatabase extends _$RekordboxDatabase {
   ///
   /// Any values that are `null` will not be updated.
   Future<DjmdContentData> updateSong(String id, {String? keyId}) async {
-    return (update(djmdContent)..where((s) => s.id.equals(id)))
+    return await (update(djmdContent)..where((s) => s.id.equals(id)))
         .writeReturning(DjmdContentCompanion(keyID: keyId.toValue()))
         .then((value) => value.single);
   }
@@ -370,8 +370,6 @@ LazyDatabase _openConnection() {
       throw StateError('Rekordbox installation not found on this system.');
     }
 
-    configureSqlcipherDynamicLibrary(getConfigValue: _getConfigValue);
-
     final dbFile = File(config.dbPath);
     if (!dbFile.existsSync()) {
       throw StateError('Rekordbox database not found at: ${config.dbPath}');
@@ -380,6 +378,7 @@ LazyDatabase _openConnection() {
     final database = NativeDatabase(
       dbFile,
       setup: (rawDb) {
+        ensureSqlcipher(rawDb);
         final key = getRekordboxEncryptionKey();
         rawDb
           ..execute("PRAGMA key = '$key';")
@@ -391,13 +390,4 @@ LazyDatabase _openConnection() {
 
     return database;
   });
-}
-
-String? _getConfigValue(String name) {
-  if (Platform.environment[name] case final envValue?
-      when envValue.isNotEmpty) {
-    return envValue;
-  }
-
-  return null;
 }
