@@ -32,11 +32,21 @@ class RekordboxDatabase extends _$RekordboxDatabase {
   static Future<RekordboxDatabase> connect({
     bool allowConnectionWhenRunning = false,
   }) async {
-    if (!allowConnectionWhenRunning && await checkIsRekordboxRunning()) {
-      throw StateError(
-        'Rekordbox is running. Please close it before '
-        'connecting to the database.',
-      );
+    if (await checkIsRekordboxRunning()) {
+      if (!allowConnectionWhenRunning) {
+        throw StateError(
+          'Rekordbox is running. Please close it before '
+          'connecting to the database.',
+        );
+      } else {
+        stderr.writeln(
+          '''
+⚠️ Rekordbox is being accessed while it is running.
+⚠️ Doing any write operation to the database is extremely dangerous.
+⚠️ Proceed with caution.
+          ''',
+        );
+      }
     }
     return RekordboxDatabase._();
   }
