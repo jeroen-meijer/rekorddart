@@ -1,5 +1,7 @@
 ## Upcoming
 
+## 2.0.0
+
 - docs: require every PR to update Upcoming; prefer end-user wording when the change is visible; write what the UI does instead of soft wrappers; keep changelog bullets consecutive (no blank lines between them)
 - chore: add database and extensions barrels; export them from rekorddart.dart
 - feat: `RekordboxDatabase.connect(allowConnectionWhenRunning: true)` prints a warning when Rekordbox is running, since writing to the database then can corrupt it
