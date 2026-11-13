@@ -1,5 +1,9 @@
 ## Upcoming
 
+## 2.0.1
+
+- fix(deps): apps that use xml 6 (for example through youtube_explode_dart) can depend on rekorddart 2 again; rekorddart accepts xml 6 and 7
+
 ## 2.0.0
 
 - docs: require every PR to update Upcoming; prefer end-user wording when the change is visible; write what the UI does instead of soft wrappers; keep changelog bullets consecutive (no blank lines between them)
