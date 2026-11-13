@@ -7,7 +7,7 @@ A Dart library for type-safe access to Rekordbox SQLite databases (SQLCipher-enc
 - **Dart 3.10+**
 - **Drift** — SQLite ORM, schema from `rekordbox_schema.drift`
 - **sqlite3** — SQLite driver
-- **SQLCipher** — encryption (external; must be installed)
+- **SQLCipher** — encryption, downloaded by `package:sqlite3` through `hooks: user_defines: sqlite3: source: sqlcipher` in the app's pubspec
 - **very_good_analysis** — lint rules
 
 ## Key Directories
@@ -19,7 +19,7 @@ lib/
 │   ├── rekordbox_database.dart
 │   ├── rekordbox_schema.drift
 │   └── rekordbox_database.g.dart
-├── config.dart            # DB path, SQLCipher config
+├── config.dart            # DB path, encryption key
 ├── extensions/            # Query helpers, DJMD content extensions
 └── functions.dart
 example/                   # Usage examples (fetch_config, recent_tracks, create_playlist)
@@ -31,10 +31,8 @@ _resources/                 # rekordbox_sql_db_impl_details.md (implementation n
 ## Prerequisites / Environment
 
 - **Rekordbox 6.0.0+** — produces `master.db` (SQLCipher-encrypted)
-- **SQLCipher 4.0.0+** — `brew install sqlcipher` (macOS)
-- Optional env vars:
-  - `SQLCIPHER_DYLIB` — path to libsqlcipher (if non-standard)
-  - `REKORDBOX_DB_KEY` — decryption key (or use default)
+- No SQLCipher install needed: this package's own pubspec (and every app that uses it) sets `source: sqlcipher` for `package:sqlite3`. Run code with `dart run` / `dart test` / `dart build cli` / `dart install`; `dart compile exe` and `dart pub global activate` skip build hooks.
+- Optional env var: `REKORDBOX_DB_KEY` — decryption key (or use default)
 
 ## Common Commands
 

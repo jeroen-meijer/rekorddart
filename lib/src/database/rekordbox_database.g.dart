@@ -42569,7 +42569,16 @@ class $AgentNotificationTableManager
                 updatedAt: updatedAt,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<AgentNotification, AgentNotificationData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    AgentNotification,
+                    AgentNotificationData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -42872,7 +42881,18 @@ class $AgentNotificationLogTableManager
                 updatedAt: updatedAt,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<AgentNotificationLog, AgentNotificationLogData>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    AgentNotificationLog,
+                    AgentNotificationLogData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -43234,7 +43254,16 @@ class $AgentRegistryTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<AgentRegistry, AgentRegistryData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    AgentRegistry,
+                    AgentRegistryData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -43697,7 +43726,18 @@ class $CloudAgentRegistryTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<CloudAgentRegistry, CloudAgentRegistryData>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    CloudAgentRegistry,
+                    CloudAgentRegistryData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -44073,7 +44113,18 @@ class $ContentActiveCensorTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<ContentActiveCensor, ContentActiveCensorData>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    ContentActiveCensor,
+                    ContentActiveCensorData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -44441,7 +44492,16 @@ class $ContentCueTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<ContentCue, ContentCueData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    ContentCue,
+                    ContentCueData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -45032,7 +45092,16 @@ class $ContentFileTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<ContentFile, ContentFileData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    ContentFile,
+                    ContentFileData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -45459,7 +45528,16 @@ class $DjmdActiveCensorTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdActiveCensor, DjmdActiveCensorData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdActiveCensor,
+                    DjmdActiveCensorData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -45867,7 +45945,16 @@ class $DjmdAlbumTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdAlbum, DjmdAlbumData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdAlbum, DjmdAlbumData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -46210,7 +46297,16 @@ class $DjmdArtistTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdArtist, DjmdArtistData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdArtist,
+                    DjmdArtistData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -46593,7 +46689,16 @@ class $DjmdCategoryTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdCategory, DjmdCategoryData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdCategory,
+                    DjmdCategoryData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -46999,7 +47104,16 @@ class $DjmdCloudPropertyTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdCloudProperty, DjmdCloudPropertyData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdCloudProperty,
+                    DjmdCloudPropertyData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -47365,7 +47479,16 @@ class $DjmdColorTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdColor, DjmdColorData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdColor, DjmdColorData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -49020,7 +49143,16 @@ class $DjmdContentTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdContent, DjmdContentData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdContent,
+                    DjmdContentData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -49704,7 +49836,16 @@ class $DjmdCueTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdCue, DjmdCueData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdCue, DjmdCueData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -50046,7 +50187,16 @@ class $DjmdDeviceTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdDevice, DjmdDeviceData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdDevice,
+                    DjmdDeviceData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -50370,7 +50520,16 @@ class $DjmdGenreTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdGenre, DjmdGenreData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdGenre, DjmdGenreData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -50772,7 +50931,16 @@ class $DjmdHistoryTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdHistory, DjmdHistoryData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdHistory,
+                    DjmdHistoryData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -51178,7 +51346,18 @@ class $DjmdHotCueBanklistTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdHotCueBanklist, DjmdHotCueBanklistData>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdHotCueBanklist,
+                    DjmdHotCueBanklistData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -51523,7 +51702,16 @@ class $DjmdKeyTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdKey, DjmdKeyData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdKey, DjmdKeyData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -51844,7 +52032,16 @@ class $DjmdLabelTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdLabel, DjmdLabelData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdLabel, DjmdLabelData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -52187,7 +52384,16 @@ class $DjmdMenuItemsTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdMenuItems, DjmdMenuItem>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdMenuItems,
+                    DjmdMenuItem
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -52591,7 +52797,16 @@ class $DjmdMixerParamTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdMixerParam, DjmdMixerParamData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdMixerParam,
+                    DjmdMixerParamData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -52972,7 +53187,16 @@ class $DjmdMyTagTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdMyTag, DjmdMyTagData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdMyTag, DjmdMyTagData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -53391,7 +53615,16 @@ class $DjmdPlaylistTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdPlaylist, DjmdPlaylistData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdPlaylist,
+                    DjmdPlaylistData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -53728,7 +53961,16 @@ class $DjmdPropertyTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdProperty, DjmdPropertyData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdProperty,
+                    DjmdPropertyData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -54142,7 +54384,16 @@ class $DjmdRecommendLikeTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdRecommendLike, DjmdRecommendLikeData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdRecommendLike,
+                    DjmdRecommendLikeData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -54552,7 +54803,16 @@ class $DjmdRelatedTracksTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdRelatedTracks, DjmdRelatedTrack>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdRelatedTracks,
+                    DjmdRelatedTrack
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -54937,7 +55197,16 @@ class $DjmdSamplerTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSampler, DjmdSamplerData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSampler,
+                    DjmdSamplerData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -55303,7 +55572,16 @@ class $DjmdSongHistoryTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongHistory, DjmdSongHistoryData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongHistory,
+                    DjmdSongHistoryData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -56039,7 +56317,19 @@ class $DjmdSongHotCueBanklistTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<
+                    DjmdSongHotCueBanklist,
+                    DjmdSongHotCueBanklistData
+                  >(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongHotCueBanklist,
+                    DjmdSongHotCueBanklistData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -56409,7 +56699,16 @@ class $DjmdSongMyTagTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongMyTag, DjmdSongMyTagData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongMyTag,
+                    DjmdSongMyTagData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -56777,7 +57076,16 @@ class $DjmdSongPlaylistTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongPlaylist, DjmdSongPlaylistData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongPlaylist,
+                    DjmdSongPlaylistData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -57151,7 +57459,18 @@ class $DjmdSongRelatedTracksTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongRelatedTracks, DjmdSongRelatedTrack>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongRelatedTracks,
+                    DjmdSongRelatedTrack
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -57521,7 +57840,16 @@ class $DjmdSongSamplerTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongSampler, DjmdSongSamplerData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongSampler,
+                    DjmdSongSamplerData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -57872,7 +58200,16 @@ class $DjmdSongTagListTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSongTagList, DjmdSongTagListData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    DjmdSongTagList,
+                    DjmdSongTagListData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -58239,7 +58576,16 @@ class $DjmdSortTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<DjmdSort, DjmdSortData>(table),
+                  BaseReferences<_$RekordboxDatabase, DjmdSort, DjmdSortData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -58611,7 +58957,16 @@ class $HotCueBanklistCueTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<HotCueBanklistCue, HotCueBanklistCueData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    HotCueBanklistCue,
+                    HotCueBanklistCueData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -59248,7 +59603,16 @@ class $ImageFileTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<ImageFile, ImageFileData>(table),
+                  BaseReferences<_$RekordboxDatabase, ImageFile, ImageFileData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -59715,7 +60079,16 @@ class $SettingFileTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<SettingFile, SettingFileData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    SettingFile,
+                    SettingFileData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -59858,7 +60231,16 @@ class $SqliteSequenceTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<SqliteSequence, SqliteSequenceData>(table),
+                  BaseReferences<
+                    _$RekordboxDatabase,
+                    SqliteSequence,
+                    SqliteSequenceData
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -60224,7 +60606,16 @@ class $UuidIDMapTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<UuidIDMap, UuidIDMapData>(table),
+                  BaseReferences<_$RekordboxDatabase, UuidIDMap, UuidIDMapData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),

@@ -7,8 +7,6 @@ import 'package:sqlite3/sqlite3.dart' as sqlite;
 const String _envRekordboxDbKey = 'REKORDBOX_DB_KEY';
 
 Future<void> main(List<String> args) async {
-  configureSqlcipherDynamicLibrary(getConfigValue: _getConfigValue);
-
   final config = getMostRecentRekordboxConfig();
   if (config == null) {
     stderr.writeln('Rekordbox installation not found.');
@@ -35,6 +33,7 @@ Future<void> main(List<String> args) async {
   // Open SQLCipher DB with key and dump CREATE statements.
   final db = sqlite.sqlite3.open(dbFile.path);
   try {
+    ensureSqlcipher(db);
     db.execute("PRAGMA key = '$key';");
 
     final result = db.select("""
@@ -61,7 +60,7 @@ ORDER BY CASE type WHEN 'table' THEN 0 WHEN 'view' THEN 1 ELSE 2 END, name;""");
 
     stdout.writeln('Wrote schema to ${outFile.path}');
   } finally {
-    db.dispose();
+    db.close();
   }
 }
 

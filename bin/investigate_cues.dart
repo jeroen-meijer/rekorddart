@@ -1,4 +1,5 @@
 #!/usr/bin/env dart
+
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:rekorddart/logger.dart';
@@ -135,9 +136,7 @@ Future<void> main(List<String> arguments) async {
       for (final banklistEntry in hotCueBanklistEntries) {
         if (banklistEntry.cueID != null) {
           final matchingCues = cues
-              .where(
-                (c) => c.id == banklistEntry.cueID,
-              )
+              .where((c) => c.id == banklistEntry.cueID)
               .toList();
           if (matchingCues.isNotEmpty) {
             final matchingCue = matchingCues.first;
